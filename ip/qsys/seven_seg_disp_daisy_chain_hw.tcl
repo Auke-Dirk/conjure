@@ -40,8 +40,8 @@ add_fileset QUARTUS_SYNTH QUARTUS_SYNTH "" ""
 set_fileset_property QUARTUS_SYNTH TOP_LEVEL seven_segment_daisy_chain_avalon_interface
 set_fileset_property QUARTUS_SYNTH ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property QUARTUS_SYNTH ENABLE_FILE_OVERWRITE_MODE false
-add_fileset_file seven_segment_daisy_chain_avalon_interface.v VERILOG PATH  $::env(CONJURE_PATH)/seven_segment_daisy_chain_avalon_interface.v TOP_LEVEL_FILE
-add_fileset_file seven_segment_daisy_chain.v VERILOG PATH $::env(CONJURE_PATH)/seven_segment_daisy_chain.v
+add_fileset_file seven_segment_daisy_chain_avalon_interface.v VERILOG PATH  $::env(CONJURE_PATH)/rtl/seven_segment_daisy_chain_avalon_interface.v TOP_LEVEL_FILE
+add_fileset_file seven_segment_daisy_chain.v VERILOG PATH $::env(CONJURE_PATH)/rtl/seven_segment_daisy_chain.v
 
 
 # 
@@ -82,10 +82,10 @@ set_interface_property avalon_slave_0 CMSIS_SVD_VARIABLES ""
 set_interface_property avalon_slave_0 SVD_ADDRESS_GROUP ""
 
 add_interface_port avalon_slave_0 writedata writedata Input 32
-add_interface_port avalon_slave_0 readdata readdata Output 8
+add_interface_port avalon_slave_0 readdata readdata Output 32
 add_interface_port avalon_slave_0 write write Input 1
 add_interface_port avalon_slave_0 read read Input 1
-add_interface_port avalon_slave_0 byteenable byteenable Input 1
+add_interface_port avalon_slave_0 byteenable byteenable Input 4
 add_interface_port avalon_slave_0 chipselect chipselect Input 1
 set_interface_assignment avalon_slave_0 embeddedsw.configuration.isFlash 0
 set_interface_assignment avalon_slave_0 embeddedsw.configuration.isMemoryDevice 0
