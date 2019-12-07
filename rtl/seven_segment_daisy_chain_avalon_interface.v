@@ -1,24 +1,39 @@
-module seven_segment_daisy_chain_avalon_interface (clock, resetn, writedata, readdata, write, read, byteenable, chipselect, Q_export);
-// signals for connecting to the Avalon fabric
-input clock, resetn, read, write, chipselect; 
-input byteenable;
-input[31:0] writedata;
-output[31:0] readdata;
+module seven_segment_daisy_chain_avalon_interface (
+clock, 
+resetn, 
+// avalon-mm-slave interface
+avs_s0_writedata, 
+avs_s0_write,
+avs_s0_byteenable, 
+avs_s0_chipselect, 
+// conduit interface	
+Q_export);
 
-// signal for exporting register contents outside of the embedded system
-output[7:0] Q_export;
+// avalon-mm interface
+input 		clock;
+input 		resetn;
 
-wire[3:0] local_byteenable;
-wire[31:0] to_reg;
-wire[31:0] from_reg;
+// avalon-mm-slave inteface 
+input 		avs_s0_chipselect; 
+input[3:0] 	avs_s0_byteenable;
+input		avs_s0_write; 
+input[31:0] avs_s0_writedata;
 
-assign to_reg = writedata;
+// conduit signal to the seven segment display
+output[7:0]	Q_export;
 
-assign local_byteenable = (chipselect & write) ? byteenable : 4'd0;
+// wires
+wire[3:0] 	local_byteenable;
+wire[31:0] 	to_reg;
+wire[31:0] 	from_reg;
+
+// Connections
+assign to_reg = avs_s0_writedata;
+
+assign local_byteenable = (avs_s0_chipselect & avs_s0_write) ? avs_s0_byteenable : 4'd0;
 
 seven_segment_daisy_chain U1 ( .clock(clock), .resetn(resetn), .D(to_reg), .byteenable(local_byteenable), .Q(from_reg) );
 
-assign readdata = from_reg;
 assign Q_export = from_reg[7:0]; 
 
 endmodule
