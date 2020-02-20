@@ -1,0 +1,4 @@
+{
+  "src": "test_display_tb.v",
+  "expect": "Let's conjure up a display!\n"
+}

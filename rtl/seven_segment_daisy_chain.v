@@ -8,6 +8,15 @@
  * Models a daisy chain of seven segment displays. 
  **********************************************************************/
 
+
+/*
+	D[7:0]     datablock
+    D[15:8]    display-type 
+
+*/
+
+
+
 //*********************************************************
 module seven_segment_daisy_chain(clock, resetn, D, byteenable, Q);
 //*********************************************************
