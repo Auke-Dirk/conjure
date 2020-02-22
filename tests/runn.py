@@ -3,12 +3,13 @@ import os
 import glob
 import pprint
 import subprocess
+import sys
+import re
 from shutil import which
 
 
 class Test:
 	count = 0
-
 
 	def __init__(self,prg):
 		self.prg = prg
@@ -37,7 +38,7 @@ class Test:
 
 	
 	def handle_error(self,filename):
-		print("[%d] [ERROR] %s." % (self.count,filename))
+		print("[%d] [ERROR ] %s." % (self.count,filename))
 	
 	def handle_passed(self,filename):
 		print("[%d] [PASSED] %s." % (self.count,filename))
@@ -79,8 +80,18 @@ def main():
 	prog = IVerilog(incl_paths)
 	test = Test(prog);
 	path = os.getcwd()
-	#print(prog.info())
+
+	test_files = []
+
 	for filename in glob.glob('./**/*.json',recursive=True):
+		test_files.append(filename)
+
+	if len(sys.argv) == 2:
+		regex = re.compile(sys.argv[1])
+		test_files = [i for i in test_files if regex.search(i)]		
+
+
+	for filename in test_files:
 		test.dut(os.path.abspath(filename))
  
   
