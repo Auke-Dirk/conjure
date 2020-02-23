@@ -1,0 +1,4 @@
+{
+  "src": "test_file_tb.v",
+  "expect-file" : "test_file_tb.txt"
+}

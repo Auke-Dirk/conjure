@@ -26,9 +26,16 @@ class Test:
 				compiled_resource = self.prg.compile(data)
 				if compiled_resource["status"]:
 					test_result = subprocess.run(compiled_resource["exec"], check=True, stdout=subprocess.PIPE, universal_newlines=True)
-					if test_result.stdout == data["expect"]:
+
+					expect = self.fetch_expect(data)
+
+					if test_result.stdout == expect:
 						self.handle_passed(filename)
 					else:
+						print("expect:")
+						print(expect)
+						print("got:")
+						print(test_result.stdout)
 						self.handle_failed(filename)
 						
 		except Exception as error:
@@ -36,6 +43,15 @@ class Test:
 			print("\t" + str(error))
 
 
+	def fetch_expect(self,data):
+		if "expect" in data:
+			return data["expect"]
+		if "expect-file" in data:
+			p = os.path.join(data["path"],data["expect-file"])
+			f = open(p)
+			expect = f.read()
+			f.close()
+			return expect
 	
 	def handle_error(self,filename):
 		print("[%d] [ERROR ] %s." % (self.count,filename))
