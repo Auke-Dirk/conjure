@@ -1,0 +1,4 @@
+{
+  "src": "test_gtk_wave_tb.v",
+  "expect": "VCD info: dumpfile vcd/test_gtk_wave.vcd opened for output.\n"
+}
