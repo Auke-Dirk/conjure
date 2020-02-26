@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import json
 import os
 import glob
@@ -78,7 +80,7 @@ class IVerilog:
 
 	def compile(self,data):
 		exec = os.path.join(data["path"],"conjure.out")
-		args = [self.prg, "-o"+exec]
+		args = [self.prg,"-Wall" ,"-o"+exec]
 
 		if "src" in data:
 			args.append(os.path.join(data["path"],data["src"]))
